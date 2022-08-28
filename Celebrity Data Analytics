@@ -1,0 +1,51 @@
+--create a table of celebrities, a table for celebrity occupations, and a table of known celebrity friendships
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, birthdate TEXT, fame_breakthrough INTEGER, career1 INTEGER, career2 INTEGER, career3 INTEGER);
+
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2) VALUES("liz gillies","07-26-1993",2010,1,2);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2, career3) VALUES("ariana grande","06-26-1993",2010,1,2,3);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2, career3) VALUES("selena gomez","07-22-1992",2007,1,2,3);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1) VALUES("francia raisa","07-26-1988",2006,1);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2, career3) VALUES("snoop dogg","10-20-1971",1993,2,3,4);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2) VALUES("martha stewart","08-03-1941",1990,4,5);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1, career2) VALUES("meghan markle","08-04-1981",2011,1,6);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1) VALUES("serena williams","09-26-1981",2002,7);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1) VALUES("emma stone","11-06-1988",2004,1);
+INSERT INTO famous_people (name, birthdate, fame_breakthrough, career1) VALUES("jennifer lawrence","08-15-1990",2012,1);
+
+CREATE TABLE careers (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);
+
+INSERT INTO careers (name) VALUES("actress_actor");
+INSERT INTO careers (name) VALUES ("singer_rapper");
+INSERT INTO careers (name) VALUES ("song_writer");
+INSERT INTO careers (name) VALUES ("media_personality");
+INSERT INTO careers (name) VALUES ("business_person");
+INSERT INTO careers (name) VALUES ("royalty");
+INSERT INTO careers (name) VALUES ("profesional_athlete");
+
+CREATE TABLE famous_friend_duos (id INTEGER PRIMARY KEY AUTOINCREMENT, friend1_id INTEGER, friend2_id INTEGER);
+
+INSERT INTO famous_friend_duos (friend1_id, friend2_id) VALUES (1,2);
+INSERT INTO famous_friend_duos (friend1_id, friend2_id) VALUES (3,4);
+INSERT INTO famous_friend_duos (friend1_id, friend2_id) VALUES (5,6);
+INSERT INTO famous_friend_duos (friend1_id, friend2_id) VALUES (7,8);
+INSERT INTO famous_friend_duos (friend1_id, friend2_id) VALUES (9,10);
+
+--display a table listing out the celebrities next to their known friendship counterparts
+SELECT a.name as bestie_a, b.name as bestie_b FROM famous_friend_duos
+JOIN famous_people a
+ON famous_friend_duos.friend1_id=a.id
+JOIN famous_people b
+ON famous_friend_duos.friend2_id=b.id;
+
+--display the celebrities in a table next to their known-for occupations
+SELECT famous_people.name, a.name as occupation1, b.name as occupation2, c.name as occupation3 FROM famous_people
+LEFT OUTER JOIN careers a
+ON famous_people.career1 = a.id
+LEFT OUTER JOIN careers b ON famous_people.career2 = b.id
+LEFT OUTER JOIN careers c
+ON famous_people.career3 = c.id
+GROUP BY famous_people.name;
+
+--display the database of celebrities in order from earliest breakout into fame
+SELECT name, fame_breakthrough FROM famous_people ORDER BY fame_breakthrough ASC;
