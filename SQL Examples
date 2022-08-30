@@ -1,0 +1,79 @@
+In this SQL, I'm querying a database with multiple tables in it to quantify statistics about country and city data. 
+
+1. List all attributes for American cities with a population greater than 100,000.
+SELECT *
+FROM CITY
+WHERE population > 100000 AND COUNTRYCODE = "USA";
+
+2. List all American cities with a population greater than 120,000.
+SELECT name
+FROM CITY
+WHERE population > 120000 AND COUNTRYCODE = "USA";
+
+3. Generate the every attribute from the CITY table.
+SELECT *
+FROM CITY;
+
+4. List all  attributes for ID 1661.
+SELECT *
+FROM CITY
+WHERE ID = 1661;
+
+5. List all attributes for every Japanese city.
+SELECT *
+FROM CITY
+WHERE COUNTRYCODE = "JPN";
+
+6. List all cities in Japan.
+SELECT name
+FROM CITY
+WHERE COUNTRYCODE = "JPN";
+
+7. How many cities have a Population larger than 100,000?
+SELECT COUNT(name)
+FROM CITY
+WHERE population > 100000;
+
+8. What is the total population of all cities California?
+SELECT SUM(population)
+FROM CITY
+WHERE DISTRICT = "California";
+
+9. What is the average population of all cities California?
+SELECT AVG(population)
+FROM CITY
+WHERE DISTRICT = "California";
+
+10. What is the the average population for all cities, rounded down to the nearest integer?
+SELECT FLOOR(AVG(population))
+FROM CITY;
+
+11. What is the total population for all Japanese cities?
+SELECT SUM(population)
+FROM CITY
+WHERE COUNTRYCODE = "JPN";
+
+12. What is the difference between the smallest and largest city populations?
+SELECT (max(population)-min(population))
+FROM CITY;
+
+13. What is the total population of all cities on the continent Asia?
+SELECT SUM(city.population)
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE=COUNTRY.CODE
+WHERE COUNTRY.CONTINENT = "Asia";
+
+14. List the names of all cities on the continent Africa.
+SELECT CITY.NAME
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE=COUNTRY.CODE
+WHERE COUNTRY.CONTINENT = "Africa";
+
+15. List  the names of all the continents and their respective average city populations rounded down to the nearest integer.
+SELECT COUNTRY.CONTINENT, FLOOR(avg(CITY.POPULATION))
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE=COUNTRY.CODE
+GROUP BY COUNTRY.CONTINENT;
