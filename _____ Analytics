@@ -1,0 +1,93 @@
+#In this SQL, I'm querying a database to quantify statistics about _______. 
+
+1. List all cities next to their respective states.
+SELECT CITY,STATE
+FROM STATION;
+
+2. List the sum of all the values in LAT_N rounded to a scale of  decimal places next to all values in LONG_W rounded to a scale of  decimal places.
+SELECT ROUND((sum(lat_N)),2),ROUND((sum(long_W)),2)
+FROM STATION;
+
+3. List all cities with an even ID number.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE MOD(ID,2)=0 ORDER BY CITY;
+
+4. What is the difference between the number of city entries and the number of distinct city entries?
+SELECT (Count(CITY)-COUNT(DISTINCT CITY))
+FROM STATION;
+
+5. List the cities with the longest and shortest names next to their respective lengths.
+SELECT CITY, length(CITY)
+FROM STATION 
+WHERE length(CITY)=(SELECT max(length(CITY))FROM STATION)
+ORDER BY CITY LIMIT 1
+UNION
+SELECT CITY, length(CITY)
+FROM STATION 
+WHERE length(CITY)=(SELECT min(length(CITY))FROM STATION)
+ORDER BY CITY LIMIT 1;
+
+6. List the city names starting with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LEFT(city,1) IN ("a","e","i","o","u");
+
+7. List the city names ending with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE RIGHT(city,1) IN ("a","e","i","o","u");
+
+8. List the city names both beginning and ending with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE RIGHT(city,1) IN ("a","e","i","o","u")
+AND LEFT(city,1) IN ("a","e","i","o","u");
+
+9. List the city names that do not start with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LEFT(city,1) NOT IN ("a","e","i","o","u");
+
+
+10. List the city names that do not end with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE RIGHT(city,1) NOT IN ("a","e","i","o","u");
+
+
+11. List the city names that either do not begin or do not end with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LEFT(city,1) NOT IN ("a","e","i","o","u")
+OR RIGHT(city,1) NOT IN ("a","e","i","o","u");
+
+12. List the city names that neither begin nor end with vowels, excluding duplicates.
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LEFT(city,1) NOT IN ("a","e","i","o","u")
+AND RIGHT(city,1) NOT IN ("a","e","i","o","u");
+
+13.
+
+
+14.
+
+
+15.
+
+
+16.
+
+
+17.
+
+
+18.
+
+
+19.
+
+
+20.
+
