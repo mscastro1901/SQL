@@ -68,26 +68,39 @@ FROM STATION
 WHERE LEFT(city,1) NOT IN ("a","e","i","o","u")
 AND RIGHT(city,1) NOT IN ("a","e","i","o","u");
 
-13.
+13. What is the sum of Northern Latitudes that have values greater than 38.770 and less than 137.2345, rounded to 4 decimal places.
+SELECT ROUND(SUM(LAT_N),4)
+FROM STATION
+WHERE LAT_N BETWEEN 38.7880 AND 137.2345;
 
+14. What is the greatest value of the Northern Latitudes that is less than 137.2345, rounded to 4 decimal places.
+SELECT ROUND(MAX(LAT_N),4)
+FROM STATION
+WHERE LAT_N < 137.2345;
 
-14.
+15. What is the Western Longitude for the largest Northern Latitude that is less than 137.2345, rounded to 4 decimal places.
+SELECT ROUND(LONG_W,4)
+FROM STATION
+WHERE LAT_N IN (SELECT MAX(LAT_N) FROM STATION WHERE LAT_N < 137.2345);
 
+16. What is the smallest Northern Latitude that is greater than 38.7780, rounded to 4 decimal places.
+SELECT ROUND(LAT_N,4)
+FROM STATION
+WHERE LAT_N IN (SELECT MIN(LAT_N) FROM STATION WHERE LAT_N > 38.7780);
 
-15.
+17. What is the Western Longitude where the smallest Northern Latitude is greater than 38.7780, rounded to 4 decimal places.
+SELECT ROUND(MIN(LONG_W),4)
+FROM STATION
+WHERE LAT_N IN (SELECT MIN(LAT_N) FROM STATION WHERE LAT_N > 38.7780);
 
+18. What is the Manhattan Distance between points P1 and P2 and round it to a scale of 4 decimal places.
+        P1(a,b) and P2(c,d) are two points on a 2d plane. a=MIN(LAT_N) b=MIN(LONG_W) c=MAX(LAT_N) d=MAX(LONG_W)
+SELECT
+ROUND((MAX(LAT_N)-MIN(LAT_N))+(MAX(LONG_W)-MIN(LONG_W)),4)
+FROM STATION; 
+ 
+19. What is the Euclidean Distance between points P1 and P2 and round it to a scale of 4 decimal places.
+        Consider  P1(a,c) and P2(b,d) are two points on a 2D plane where  a=MIN(LAT_N) b=MAX(LAT_N) c=MIN(LONG_W) d=MAX(LONG_W)
 
-16.
-
-
-17.
-
-
-18.
-
-
-19.
-
-
-20.
+20. What is the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.
 
