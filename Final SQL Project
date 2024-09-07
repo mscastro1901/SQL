@@ -43,10 +43,16 @@ FROM chinook.employees
 WHERE Title = 'Sales Support Agent';
 
 #Find a unique/distinct list of billing countries from the Invoice table.
-
+SELECT DISTINCT BillingCountry
+FROM chinook.invoices;
 
 #Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
-
+SELECT invoices.InvoiceId, employees.FirstName, employees.LastName
+FROM chinook.invoices
+JOIN chinook.customers
+ON invoices.CustomerId = customers.CustomerId
+JOIN chinook.employees
+ON customers.SupportRepId = employees.EmployeeId;
 
 #Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
 SELECT ROUND(SUM(invoices.Total),2) AS 'Total Revenue', 
@@ -71,13 +77,32 @@ FROM chinook.invoices
 WHERE InvoiceDate LIKE '%2009%';
 
 #Write a query that includes the purchased track name with each invoice line ID.
-
+SELECT tracks.Name AS TrackName, invoice_items.InvoiceId 
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.TrackId = tracks.TrackId
+JOIN chinook.albums
+ON tracks.AlbumId = albums.AlbumId;
 
 #Write a query that includes the purchased track name AND artist name with each invoice line ID.
-
+SELECT tracks.Name AS TrackName, artists.Name AS Artist, invoice_items.InvoiceId 
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.TrackId = tracks.TrackId
+JOIN chinook.albums
+ON tracks.AlbumId = albums.AlbumId
+JOIN chinook.artists
+ON albums.ArtistId = artists.ArtistId;
 
 #Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
-
+SELECT tracks.Name AS TrackName, albums.Title AS AlbumTitle, media_types.Name AS Media_Type, genres.Name AS Genre
+FROM chinook.tracks
+JOIN chinook.albums
+ON tracks.AlbumId = albums.AlbumId
+JOIN chinook.media_types
+ON tracks.MediaTypeId = media_types.MediaTypeId
+JOIN chinook.genres
+ON tracks.GenreId = genres.GenreId;
 
 #Show the total sales made by each sales agent.
 SELECT ROUND(SUM(Total),2) AS 'Total Sales Made', 
