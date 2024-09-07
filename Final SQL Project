@@ -33,8 +33,8 @@ WHERE country = 'Brazil';
 #Find the Invoices of customers who are from Brazil. The resulting table should show the  , Date of the invoice,
 SELECT customers.FirstName, customers.LastName, invoices.InvoiceId, invoices.InvoiceDate, invoices.BillingCountry
 FROM chinook.customers
-join chinook.invoices
-on customers.CustomerId = invoices.CustomerId
+JOIN chinook.invoices
+ON customers.CustomerId = invoices.CustomerId
 WHERE country = 'Brazil';
 
 #Show the Employees who are Sales Agents.
@@ -49,14 +49,15 @@ WHERE Title = 'Sales Support Agent';
 
 
 #Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
-group by customerID
-SELECT ROUND(SUM(invoices.Total),2) AS '2009 Total Revenue', customers.FirstName, customers.LastName, customers.Country, employees.LastName, employees.FirstName
+SELECT ROUND(SUM(invoices.Total),2) AS 'Total Revenue', 
+customers.FirstName, customers.LastName, customers.Country, 
+employees.LastName AS EmployeeLastName, employees.FirstName AS EmployeeFirstName
 FROM chinook.invoices
-join chinook.customers
-on invoices.CustomerId = customers.CustomerId
-join chinook.employees
-on customers.SupportRepId = employees.EmployeeId
-GROUP BY CustomerId;
+JOIN chinook.customers
+ON invoices.CustomerId = customers.CustomerId
+JOIN chinook.employees
+ON customers.SupportRepId = employees.EmployeeId
+GROUP BY customers.CustomerId;
 
 
 #How many Invoices were there in 2009?
@@ -79,6 +80,23 @@ WHERE InvoiceDate LIKE '%2009%';
 
 
 #Show the total sales made by each sales agent.
-
+SELECT ROUND(SUM(Total),2) AS 'Total Sales Made', 
+employees.LastName AS EmployeeLastName, employees.FirstName AS EmployeeFirstName
+FROM chinook.invoices
+JOIN chinook.customers
+on invoices.CustomerId = customers.CustomerId
+JOIN chinook.employees
+ON customers.SupportRepId = employees.EmployeeId
+GROUP BY EmployeeId;
 
 # Which sales agent made the most dollars in sales in 2009?
+SELECT ROUND(SUM(Total),2) AS 'Total Sales Made 2009', employees.LastName AS EmployeeLastName, employees.FirstName AS EmployeeFirstName
+FROM chinook.invoices
+JOIN chinook.customers
+on invoices.CustomerId = customers.CustomerId
+JOIN chinook.employees
+ON customers.SupportRepId = employees.EmployeeId
+WHERE  InvoiceDate LIKE '%2009%'
+GROUP BY EmployeeId
+ORDER BY `Total Sales Made 2009` DESC
+LIMIT 1;
