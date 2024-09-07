@@ -1,23 +1,3 @@
-WITH crosswalk_avg_safety AS (SELECT c.street, avg(c.safetyrating) AS rating
-FROM CityBikeLanes c
-group by c.street)
-SELECT street, rating, 'Safe Lane' AS label
-FROM crosswalk_avg_safety
-WHERE rating >=4;
-
---list all the bike lanes, both safety ratings for each lane given by the two technicians, average safety rating for each lane,
---recommendation of "Remove", "Leave As-Is", or "Improvements Needed".
-SELECT street, safetyrating,
-AVG(safetyrating) OVER (PARTITION BY street) as "Average_safety_rating",
-CASE
-WHEN Avg(safetyrating) OVER (PARTITION BY street) >=4 THEN 'Leave as is'
-WHEN Avg(safetyrating) OVER (PARTITION BY street) <2.5 THEN 'Remove'
-ELSE 'Improvements Needed'
-end as Reccomendation
-FROM CityBikeLanes;
-
-
-
 #In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data of a digital media store. 
 
 #Show Customers who are not in the US.
@@ -121,3 +101,11 @@ WHERE  InvoiceDate LIKE '%2009%'
 GROUP BY EmployeeId
 ORDER BY `Total Sales 2009` DESC
 LIMIT 1;
+
+# Show a list of customers who placed at least 3 orders, how many orders they placed, and the total they spent.
+SELECT customers.LastName, customers.FirstName, Count(invoices.InvoiceId) AS NumberOfInvoices, SUM(invoices.Total) AS TotalSpent
+FROM chinook.invoices
+JOIN chinook.customers
+ON invoices.CustomerId = customers.CustomerId
+Group BY customers.CustomerId
+HAVING Count(invoices.InvoiceId)>2;
