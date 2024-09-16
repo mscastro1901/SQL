@@ -1,3 +1,7 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about celebrities and their freindships. 
+
+
+
 --create a table of celebrities, a table for celebrity occupations, and a table of known celebrity friendships
 
 CREATE TABLE famous_people (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, birthdate TEXT, fame_breakthrough INTEGER, career1 INTEGER, career2 INTEGER, career3 INTEGER);
@@ -47,5 +51,3 @@ LEFT OUTER JOIN careers c
 ON famous_people.career3 = c.id
 GROUP BY famous_people.name;
 
---display the database of celebrities in order from earliest breakout into fame
-SELECT name, fame_breakthrough FROM famous_people ORDER BY fame_breakthrough ASC;
