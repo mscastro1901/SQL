@@ -1,4 +1,4 @@
-#In this SQL, I'm querying a database to quantify statistics about _______. 
+#In this SQL, I'm querying a database
 
 1. List all cities next to their respective states.
 SELECT CITY,STATE
@@ -98,9 +98,3 @@ WHERE LAT_N IN (SELECT MIN(LAT_N) FROM STATION WHERE LAT_N > 38.7780);
 SELECT
 ROUND((MAX(LAT_N)-MIN(LAT_N))+(MAX(LONG_W)-MIN(LONG_W)),4)
 FROM STATION; 
- 
-19. What is the Euclidean Distance between points P1 and P2 and round it to a scale of 4 decimal places.
-        Consider  P1(a,c) and P2(b,d) are two points on a 2D plane where  a=MIN(LAT_N) b=MAX(LAT_N) c=MIN(LONG_W) d=MAX(LONG_W)
-
-20. What is the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.
-
