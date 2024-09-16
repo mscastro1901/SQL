@@ -1,4 +1,4 @@
-#In this SQL, I'm querying a database
+#In this SQL, I'm querying a database of cities, states, and their longitudes and latitudes.
 
 1. List all cities next to their respective states.
 SELECT CITY,STATE
